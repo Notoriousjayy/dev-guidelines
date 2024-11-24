@@ -1,12 +1,14 @@
 ### **C++: Updated `style-guide.md`**
 
-```markdown
 # C++ Style Guide
 
 ## Formatting
 - Use 4 spaces for indentation.
 - Place braces `{}` on their own line for classes and methods.
-
+- Align `*` and `&` with the variable name:
+  ```cpp
+  int* ptr; // Recommended
+  
 ## Naming Conventions
 - Variables and functions: `camelCase`
 - Classes: `PascalCase`
