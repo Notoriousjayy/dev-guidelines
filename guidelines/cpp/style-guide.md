@@ -20,3 +20,6 @@
 - Use `auto` for type inference where appropriate:
   ```cpp
   auto sum = a + b;
+  for (auto& element : container) {
+    // Logic
+  }
