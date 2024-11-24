@@ -225,3 +225,25 @@ This document outlines best practices for writing secure, reliable, and efficien
 
 ### Item 41: Use marker interfaces to define types
 - Marker interfaces are cleaner than marker annotations.
+## Lambdas and Streams
+
+### Item 42: Prefer lambdas to anonymous classes
+- Lambdas improve code readability and conciseness.
+
+### Item 43: Prefer method references to lambdas
+- Method references simplify and clarify the intent when calling existing methods.
+
+### Item 44: Favor the use of standard functional interfaces
+- Use standard interfaces like `Function`, `Consumer`, and `Predicate` for consistency.
+
+### Item 45: Use streams judiciously
+- Streams improve readability for bulk data operations but can hinder performance if overused.
+
+### Item 46: Prefer side-effect-free functions in streams
+- Side effects in streams can lead to unpredictable behavior and bugs.
+
+### Item 47: Prefer `Collection` to `Stream` as a return type
+- Collections are more versatile and reusable than streams.
+
+### Item 48: Use caution when making streams parallel
+- Parallel streams may not always improve performance and can lead to complexity.
