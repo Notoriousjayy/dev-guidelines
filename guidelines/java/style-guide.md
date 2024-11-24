@@ -2,7 +2,7 @@
 
 This document provides recommendations for coding style and conventions to ensure consistent and maintainable Java code.
 
-## Chapter 1: Security
+## Security
 
 1. Limit the lifetime of sensitive data.
 2. Do not store unencrypted sensitive information on the client side.
