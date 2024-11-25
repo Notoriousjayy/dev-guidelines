@@ -309,3 +309,191 @@ To transcribe the best practices for Embedded C coding from the document, I'll c
 - Always prioritize **readability**, **modularity**, and **safety** in design.
 
 ---
+Here is a detailed and comprehensive draft for `best-practices.md` based on the Embedded C Coding Standard:
+
+---
+
+# Best Practices for Embedded C Development
+
+This document outlines the best practices for Embedded C development. These practices are based on reducing defects, improving code maintainability, ensuring safety, and fostering collaboration across teams.
+
+---
+
+## **General Rules**
+
+1. **Adopt the C99 Standard:**
+   - All programs must comply with the C99 ISO standard to ensure compatibility and access to modern language features.
+
+2. **Line Width:**
+   - Limit all lines to a maximum of **80 characters** for readability in reviews and printouts.
+
+3. **Braces Usage:**
+   - Always use braces (`{}`) to enclose blocks for `if`, `else`, `while`, `do`, and `for` statements, even for single lines.
+
+4. **Operator Clarity:**
+   - Use parentheses to make the order of operations explicit, avoiding reliance on operator precedence.
+
+5. **Keywords to Avoid:**
+   - Prohibit the use of `goto` (unless necessary for error handling), `continue`, `auto`, and `register`.
+
+6. **Keywords to Use:**
+   - Leverage `const` for read-only variables, `volatile` for hardware/memory-mapped variables, and `static` for module-private variables and functions.
+
+7. **Comment Standards:**
+   - Write clear, complete comments using proper grammar. Avoid obvious or redundant explanations.
+
+8. **Documentation Integration:**
+   - Use tools like **Doxygen** to generate automatic documentation for functions, variables, and APIs.
+
+---
+
+## **Commenting Rules**
+
+1. **Preferred Formats:**
+   - Use single-line comments (`//`) for brief notes.
+   - Do not comment out code; use `#if 0` blocks for disabling code temporarily.
+
+2. **Location and Content:**
+   - Place comments above the code they describe. Use **TODO**, **NOTE**, or **WARNING** markers to emphasize specific areas.
+
+3. **Assumptions and References:**
+   - Document any assumptions or references to external documents, such as specifications or patents.
+
+---
+
+## **Naming Conventions**
+
+1. **Variables:**
+   - Use descriptive names:
+     - Globals: `g_variable_name`
+     - Pointers: `p_variable_name`
+     - Booleans: `b_is_condition_met`
+   - Avoid short or cryptic names (minimum 3 characters).
+
+2. **Functions:**
+   - Use action verbs or questions in names, e.g., `read_sensor()` or `is_device_active()`.
+
+3. **Modules and Files:**
+   - Use lowercase names with underscores (e.g., `device_driver.c`).
+   - Include "main" in any file with the `main()` function.
+
+4. **Reserved Names:**
+   - Avoid names from standard libraries (e.g., `errno`, `strlen`) or reserved keywords.
+
+---
+
+## **Code Organization**
+
+1. **File Structure:**
+   - Separate headers (`.h`) and source files (`.c`).
+   - Include:
+     - Header guards (`#ifndef HEADER_NAME`) for headers.
+     - Section markers for constants, variables, functions, etc.
+
+2. **File Templates:**
+   - Use predefined templates for all files to ensure consistency.
+
+3. **Block Layout:**
+   - Separate logical blocks with blank lines.
+   - Place related declarations and definitions together.
+
+---
+
+## **Data Type Rules**
+
+1. **Fixed-Width Integers:**
+   - Use `int8_t`, `uint16_t`, etc., for precision. Avoid `short` and `long`.
+
+2. **Booleans:**
+   - Declare all Boolean variables as `bool` from `stdbool.h`.
+
+3. **Floating Point:**
+   - Minimize floating-point usage. Use fixed-point arithmetic where possible.
+
+4. **Structures and Unions:**
+   - Use `typedef` for all structs and unions.
+   - Prevent padding issues by validating layout sizes with preprocessor checks.
+
+---
+
+## **Function Rules**
+
+1. **Length and Layout:**
+   - Limit function length to one printed page (approx. 100 lines).
+   - Use a single `return` statement for clarity.
+
+2. **Prototypes:**
+   - Declare all public functions in the corresponding header file.
+
+3. **Thread and ISR Naming:**
+   - Name threads with `_thread` suffix and interrupt service routines with `_isr`.
+
+4. **Avoid Function-Like Macros:**
+   - Prefer inline functions over macros for better safety and debugging.
+
+---
+
+## **White Space and Formatting**
+
+1. **Indentation:**
+   - Use 4 spaces per indentation level. Do not use tabs.
+
+2. **Alignment:**
+   - Align variable declarations and assignment operators for readability.
+
+3. **Spacing:**
+   - Use spaces around operators (`+`, `=`, etc.) and after keywords (`if`, `for`, etc.).
+
+---
+
+## **Error Handling and Debugging**
+
+1. **Assertions and Validation:**
+   - Use `assert()` for debugging and enforce preconditions with comments.
+
+2. **Interrupts:**
+   - Handle ISRs carefully to avoid race conditions. ISRs should never block or wait for events.
+
+3. **Floating Point Validations:**
+   - Always validate floating-point operations with `isfinite()` to check for NaN or Infinity.
+
+---
+
+## **Concurrency and Multithreading**
+
+1. **Thread Safety:**
+   - Use `volatile` for shared variables and protect critical sections with mutexes.
+
+2. **Deadlocks and Race Conditions:**
+   - Ensure proper ordering of resource acquisition and release to avoid deadlocks.
+
+---
+
+## **Miscellaneous**
+
+1. **Version Control:**
+   - Use meaningful commit messages and follow branching strategies outlined in `version-control/branching-strategy.md`.
+
+2. **Code Reviews:**
+   - Enforce all rules via code reviews and automated static analysis tools.
+
+3. **Static Analysis:**
+   - Integrate tools to detect violations of coding standards, unused code, and potential bugs.
+
+4. **Tool Configuration:**
+   - Configure editors to replace tabs with spaces, enforce line endings, and highlight rule violations.
+
+---
+
+## **Key Takeaways**
+
+1. **Readability Over Convenience:**
+   - Prioritize clarity, even if it means more verbose code.
+
+2. **Portability and Safety:**
+   - Write code that works consistently across compilers and platforms.
+
+3. **Collaboration:**
+   - Maintain consistent practices to enable teamwork and reduce maintenance costs.
+
+---
