@@ -255,3 +255,57 @@ This file is structured comprehensively, covering general principles, code desig
 
 Here’s a comprehensive and thorough example for `best-practices.md` based on the **MISRA C++:2023 Guidelines**. The document will be aligned to cover all critical aspects, including examples, rationale, and exceptions where applicable.
 
+To transcribe the best practices for Embedded C coding from the document, I'll create a condensed markdown file summarizing the key points from the "best practices" sections of the book. Here's a draft based on the provided structure:
+
+---
+
+### Embedded C Best Practices
+
+#### **General Rules**
+- Follow **C99** standards for all programs.
+- Limit the line width to **80 characters** for readability and peer reviews.
+- Use **braces** even for single-line statements.
+- Rely on **parentheses** for clarity in complex expressions.
+- Maintain a **table of abbreviations** for consistency and clarity.
+- Avoid keywords like `goto` and `continue` unless absolutely necessary.
+
+#### **Commenting**
+- Use **clear, complete sentences** for comments with proper grammar.
+- Prefer **single-line comments** (//) over block comments (/* ... */).
+- Avoid commented-out code; use `#if 0 ... #endif` for disabling code blocks.
+- Highlight assumptions and references to external specifications in comments.
+
+#### **Naming Conventions**
+- Use descriptive names for variables, functions, and modules.
+- **Variables**: Prefix globals with `g_`, pointers with `p_`, and booleans with `b_`.
+- **Modules**: Names should be lowercase, with `.h` for headers and `.c` for source files.
+- Avoid names overlapping with **standard libraries** or **reserved keywords**.
+
+#### **Data Types**
+- Use **fixed-width integers** (`int8_t`, `uint16_t`, etc.) for precise control.
+- Avoid bit-fields with signed integers and restrict floating-point use when possible.
+- Always use `bool` for boolean values.
+
+#### **Functions**
+- Limit function length to **100 lines** or a single printed page.
+- Prefer functions with a single exit point and declare unused functions as `static`.
+- Use `const` and `volatile` to ensure correct handling of read-only and shared variables.
+
+#### **Code Structure**
+- Separate logical blocks with blank lines and align similar code elements.
+- Indent code with **4 spaces** instead of tabs for uniformity.
+- Define all modules with clear **header and source file templates**.
+
+#### **Error Handling**
+- Use `isfinite()` for floating-point checks.
+- Avoid unchecked overflows by explicitly managing signed and unsigned types.
+
+#### **Concurrency**
+- Suffix **thread** or **task** to functions implementing threads or processes.
+- Declare **interrupt service routines (ISRs)** as `static` with `_isr` suffix and ensure they are protected against concurrent execution issues.
+
+#### **Best Practices Summary**
+- Code must be maintainable, portable, and free of unnecessary dependencies.
+- Always prioritize **readability**, **modularity**, and **safety** in design.
+
+---
