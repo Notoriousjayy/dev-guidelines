@@ -179,3 +179,197 @@ This document highlights the best practices for developing maintainable and high
 99. Don’t use varargs (`ellipsis`).
 100. Don’t use invalid objects. Don’t use unsafe functions.
 101. Don’t treat arrays polymorphically.
+
+# Best Practices for C++ Development in Critical Systems
+
+This document outlines comprehensive best practices derived from the MISRA C++:2023 guidelines for using C++17 in safety-critical and security-critical systems. These guidelines are intended to enhance reliability, maintainability, and robustness in software design and implementation.
+
+---
+
+## General Principles
+
+### 1. Use a Predictable Subset of C++
+- Adopt MISRA C++ as a subset of the C++17 standard.
+- Avoid reliance on undefined, unspecified, implementation-defined, and conditionally supported behavior.
+- Use static analysis tools to detect violations and enforce compliance.
+
+### 2. Emphasize Code Safety and Security
+- Avoid constructs that introduce safety risks, such as uninitialized variables, unchecked operations, or invalid memory access.
+- Adhere to the principle of least privilege in all code design decisions.
+
+### 3. Ensure Consistency and Readability
+- Follow a consistent style guide for variable naming, indentation, and layout.
+- Modularize code into small, well-defined functions with single responsibilities.
+
+---
+
+## Best Practices for Language Features
+
+### Avoid Undefined and Unspecified Behavior
+**Rule 0.0.1**: Functions shall not contain unreachable statements.
+- **Rationale**: Unreachable code often indicates a logical error and makes maintenance harder.
+- **Compliant Example**:
+  ```cpp
+  int calculate(int value) {
+      if (value > 0) {
+          return value * 2;
+      }
+      return 0;
+  }
+  ```
+- **Non-compliant Example**:
+  ```cpp
+  int calculate(int value) {
+      return 0;
+      value++; // Unreachable code
+  }
+  ```
+
+---
+
+### Avoid Excessive Use of Implementation-Defined Features
+**Guideline**: Minimize dependency on compiler-specific behavior for better portability and maintainability.
+- **Best Practice**:
+  - Document all assumptions about compiler behavior explicitly.
+  - Use portable libraries and abstractions where possible.
+
+---
+
+## Best Practices for Code Quality
+
+### 1. Minimize Unused Declarations
+**Rule 0.2.1**: Variables with limited visibility should be used at least once.
+- **Rationale**: Unused declarations add noise to the code and may lead to confusion or maintenance errors.
+- **Example**:
+  ```cpp
+  namespace {
+      int value = 42; // Non-compliant if unused
+  }
+
+  void process(int a) {
+      [[maybe_unused]] bool flag = (a > 0); // Compliant with attribute
+      assert(flag);
+  }
+  ```
+
+### 2. Avoid Writing to Unused Objects
+**Rule 0.1.1**: A value should not be unnecessarily written to a local object.
+- **Rationale**: Writing to variables without observing their values wastes resources and might indicate logic errors.
+- **Example**:
+  ```cpp
+  int process() {
+      int temp = 0; // Non-compliant if temp is not used
+      return 0;
+  }
+  ```
+
+---
+
+## Best Practices for Floating-Point Arithmetic
+
+### Ensure Numerical Stability
+**Directive 0.3.1**: Use floating-point operations carefully to avoid precision loss or overflow.
+- Validate inputs and handle special cases such as NaN and infinity explicitly.
+- **Example**:
+  ```cpp
+  float compute(float value) {
+      if (std::isnan(value)) {
+          throw std::invalid_argument("NaN encountered");
+      }
+      return value * 2.0f;
+  }
+  ```
+
+---
+
+## Best Practices for Exception Handling
+
+### Use Exception Handling Judiciously
+**Rule 4.18**: Exceptions should not introduce runtime instability or obscure program flow.
+- **Compliant Example**:
+  ```cpp
+  try {
+      performOperation();
+  } catch (const SpecificError& e) {
+      handleError(e);
+  } catch (...) {
+      logGeneralError();
+  }
+  ```
+- **Non-compliant Example**:
+  ```cpp
+  try {
+      performOperation();
+  } catch (...) {
+      // Catch-all with no logging or handling
+  }
+  ```
+
+---
+
+## Best Practices for Type Safety
+
+### Use Explicit Type Conversions
+**Rule 6.7.4**: Avoid implicit conversions that might lead to data loss or undefined behavior.
+- **Compliant Example**:
+  ```cpp
+  float value = 42.0f;
+  int result = static_cast<int>(value); // Explicit cast
+  ```
+- **Non-compliant Example**:
+  ```cpp
+  float value = 42.0f;
+  int result = value; // Implicit cast
+  ```
+
+---
+
+## Best Practices for Resource Management
+
+### Use RAII for Resource Safety
+- Encapsulate resource management using constructors and destructors to ensure deterministic cleanup.
+- **Example**:
+  ```cpp
+  class ResourceHandler {
+  public:
+      ResourceHandler() { acquireResource(); }
+      ~ResourceHandler() { releaseResource(); }
+  };
+  ```
+
+---
+
+## Best Practices for Multi-threading
+
+### Avoid Data Races
+**Rule 4.12.1**: Synchronize shared resources to avoid data races.
+- **Compliant Example**:
+  ```cpp
+  std::mutex mutex;
+  void safeIncrement(int& counter) {
+      std::lock_guard<std::mutex> lock(mutex);
+      ++counter;
+  }
+  ```
+
+---
+
+## Documentation Practices
+
+### Use Consistent Commenting Style
+- Provide meaningful comments for complex logic, exceptions, and assumptions.
+- Avoid redundant comments that merely restate the code.
+
+---
+
+## References
+- **MISRA C++: 2023** Guidelines.
+- ISO/IEC 14882:2017 (C++17 Standard).
+- Industry standards such as IEC 61508, ISO 26262.
+
+---
+
+### Notes
+This document is a living guideline, intended to evolve with project needs and updates to coding standards. All team members should follow these practices and contribute suggestions for improvement.
+
+This document is comprehensive and includes key examples, rationales, and rules based on the MISRA guidelines. It can be further expanded or customized to align with project-specific coding conventions.
