@@ -71,7 +71,6 @@
   - Use explicit casting to prevent truncation during type conversion.
 Here is a more thorough and comprehensive version of the `best-practices.md` file, based on MISRA C:2023 guidelines. This version includes details across all relevant areas with examples and justifications.
 
-```markdown
 # Best Practices for C Programming in Critical Systems
 
 ## Overview
@@ -251,6 +250,5 @@ if (value >= 0) {
 ---
 
 This document is intended as a living reference and should be updated periodically to reflect project-specific requirements or updates to MISRA guidelines.
-```
 
 This file is structured comprehensively, covering general principles, code design, and advanced considerations with specific examples and actionable advice. Let me know if you need any further refinements!
